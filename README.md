@@ -14,6 +14,10 @@ Punch Clock ist ein Zeiterfassungssystem, welches mit Quarkus entwickelt wird.
 1. Probiere die Client-Applikation unter http://localhost:8080 aus.
 1. Schaue die API auf http://localhost:8080/q/swagger-ui/ an.
 
+## Dokumentation
+
+Die IST-Analyse mit UML-Diagrammen (Anwendungsfall-, Klassen-, ER- und Sequenzdiagramme) befindet sich in [docs/ist-analyse.md](./docs/ist-analyse.md).
+
 ## Datenbank
 
 Die Daten werden in einer PostgreSQL-Datenbank gespeichert. In der Entwicklungsumgebung wird diese in der [docker-compose-yml](./.devcontainer/docker-compose.yml) konfiguriert.

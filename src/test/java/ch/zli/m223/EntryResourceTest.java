@@ -37,6 +37,54 @@ public class EntryResourceTest {
              .body("[0].id", is(id.intValue()))
              .body("[0].checkIn", is("2026-09-29T08:00:00"))
              .body("[0].checkOut", is("2026-09-29T17:00:00"));
+
+        given()
+          .contentType("application/json")
+          .body("""
+              {"checkIn":"2026-09-30T07:30:00","checkOut":"2026-09-30T16:15:00"}
+              """)
+          .when().put("/entries/" + id)
+          .then()
+             .statusCode(200)
+             .body("id", is(id.intValue()))
+             .body("checkIn", is("2026-09-30T07:30:00"))
+             .body("checkOut", is("2026-09-30T16:15:00"));
+
+        given()
+          .when().get("/entries")
+          .then()
+             .statusCode(200)
+             .body("size()", is(1))
+             .body("[0].checkIn", is("2026-09-30T07:30:00"))
+             .body("[0].checkOut", is("2026-09-30T16:15:00"));
+
+        given()
+          .when().delete("/entries/" + id)
+          .then()
+             .statusCode(204);
+
+        given()
+          .when().get("/entries")
+          .then()
+             .statusCode(200)
+             .body(is("[]"));
+    }
+
+    @Test
+    public void testUnknownEntryReturnsNotFound() {
+        given()
+          .contentType("application/json")
+          .body("""
+              {"checkIn":"2026-09-30T07:30:00","checkOut":"2026-09-30T16:15:00"}
+              """)
+          .when().put("/entries/999999")
+          .then()
+             .statusCode(404);
+
+        given()
+          .when().delete("/entries/999999")
+          .then()
+             .statusCode(404);
     }
 
 }
